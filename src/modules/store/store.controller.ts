@@ -161,6 +161,7 @@ export class StoreController {
   @Roles(Role.Store)
   @UseGuards(JwtGuard)
   deleteProduct(@Param('productId') productId: string, @GetUser() user) {
+
     return this.storeService.deleteProduct(productId, user.id);
   }
 

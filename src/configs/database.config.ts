@@ -17,6 +17,7 @@ export interface DatabaseConfig {
   extra: {
     connectionLimit: 100;
   };
+  
 }
 
 export const defaultConfig = {

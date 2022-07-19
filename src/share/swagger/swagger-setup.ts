@@ -13,7 +13,7 @@ export function initSwagger(app: INestApplication) {
     .setTitle(swaggerConfig.title)
     .setDescription(swaggerConfig.description)
     .setVersion(swaggerConfig.version)
-    .setContact('VuAnh Tu', 'github.com/iamtuuuuuu', 'vuanhtu111127@gmail.com')
+    //.setContact('VuAnh Tu', 'github.com/iamtuuuuuu', 'vuanhtu111127@gmail.com')
     .addServer(swaggerConfig.server, 'host')
     .addBearerAuth(
       {

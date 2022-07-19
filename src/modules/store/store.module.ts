@@ -3,15 +3,19 @@ import { StoreController } from './store.controller';
 import { StoreService } from './store.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from '../mailer/mailer.module';
-import { StoreRepository } from 'src/repositories/store.repository';
+// import { StoreRepository } from 'src/repositories/store.repository';
 import {
   NotificationsRepository,
   OrderRepository,
   ProductRepository,
   StoreDetailRepository,
+  CategoryProductRepository,
+  DiscountRepository,
+  StoreRepository,
+  OrderItemRepository
 } from '../../repositories';
 import { UserModule } from '../user/user.module';
-import { DiscountRepository } from '../../repositories/discount.repository';
+// import { DiscountRepository } from '../../repositories/discount.repository';
 
 @Module({
   providers: [StoreService],
@@ -23,6 +27,8 @@ import { DiscountRepository } from '../../repositories/discount.repository';
       OrderRepository,
       StoreDetailRepository,
       NotificationsRepository,
+      CategoryProductRepository,
+      OrderItemRepository
     ]),
     MailModule,
     forwardRef(() => UserModule),

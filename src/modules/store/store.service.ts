@@ -21,6 +21,8 @@ import {
   OrderRepository,
   ProductRepository,
   StoreDetailRepository,
+  CategoryProductRepository,
+  OrderItemRepository,
 } from '../../repositories';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
@@ -37,11 +39,13 @@ export class StoreService {
   constructor(
     private readonly storeRepository: StoreRepository,
     private readonly productRepository: ProductRepository,
+    private readonly categoryproductRepository: CategoryProductRepository,
     private readonly discountRepository: DiscountRepository,
     private readonly orderRepository: OrderRepository,
     private readonly storeDetailRepository: StoreDetailRepository,
     private readonly notificationsRepository: NotificationsRepository,
     private readonly mailService: MailService,
+    private readonly orderItemRepository: OrderItemRepository,
   ) {}
 
   async getStores() {
@@ -171,10 +175,20 @@ export class StoreService {
     const product = await this.productRepository.findOne({
       where: { id: productId },
     });
+    // console.log(product);
+
     if (!product) throw new BadRequestException('Product not found');
     if (product.storeId !== storeId) {
       throw new UnauthorizedException('You can update your products');
     }
+
+    // delete all category product
+    await this.categoryproductRepository.delete({ productId: productId });
+
+    // delete all order item
+    await this.orderItemRepository.delete({ productId: productId });
+
+    // delete product
     return this.productRepository.delete({ id: productId });
   }
 
