@@ -3,7 +3,6 @@ import { StoreController } from './store.controller';
 import { StoreService } from './store.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { MailModule } from '../mailer/mailer.module';
-// import { StoreRepository } from 'src/repositories/store.repository';
 import {
   NotificationsRepository,
   OrderRepository,
@@ -15,7 +14,6 @@ import {
   OrderItemRepository
 } from '../../repositories';
 import { UserModule } from '../user/user.module';
-// import { DiscountRepository } from '../../repositories/discount.repository';
 
 @Module({
   providers: [StoreService],

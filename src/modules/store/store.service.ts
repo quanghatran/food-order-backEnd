@@ -154,20 +154,29 @@ export class StoreService {
     const product = await this.productRepository.findOne({
       where: { id: productId },
     });
+
     if (!product) throw new BadRequestException('Product not found');
     if (product.storeId !== storeId) {
       throw new UnauthorizedException('You can update your products');
     }
-    const updated =
-      images.length > 0
-        ? await this.productRepository.update(
-            { id: productId },
-            { ...updateProductDto, images },
-          )
-        : await this.productRepository.update(
-            { id: productId },
-            { ...updateProductDto },
-          );
+
+    if (images.length == 0) images = product.images;
+
+    await this.productRepository.update(
+      { id: productId },
+      { ...updateProductDto, images },
+    );
+
+    // const updated =
+    //   images.length > 0
+    //     ? await this.productRepository.update(
+    //         { id: productId },
+    //         { ...updateProductDto, images },
+    //       )
+    //     : await this.productRepository.update(
+    //         { id: productId },
+    //         { ...updateProductDto },
+    //       );
     return this.productRepository.findOne({ id: productId });
   }
 
