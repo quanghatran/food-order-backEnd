@@ -21,11 +21,11 @@ export class Notification {
   @Column('uuid', { nullable: true })
   storeId: string;
 
-  @ManyToOne(() => User, (user) => user.notifications)
+  // @ManyToOne(() => User, (user) => user.notifications)
   @JoinColumn({ name: 'userId' })
   user: string;
 
-  @ManyToOne(() => Store, (store) => store.notifications)
+  // @ManyToOne(() => Store, (store) => store.notifications)
   @JoinColumn({ name: 'storeId' })
   store: string;
 

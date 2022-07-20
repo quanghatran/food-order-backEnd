@@ -161,7 +161,6 @@ export class StoreController {
   @Roles(Role.Store)
   @UseGuards(JwtGuard)
   deleteProduct(@Param('productId') productId: string, @GetUser() user) {
-
     return this.storeService.deleteProduct(productId, user.id);
   }
 
@@ -237,6 +236,7 @@ export class StoreController {
     @GetUser() user,
   ) {
     await this.storeService.updateOrder(user.id, id, updateOrder);
+
     return {
       success: true,
       message: 'update order successfully!',
