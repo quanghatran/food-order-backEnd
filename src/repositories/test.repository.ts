@@ -54,4 +54,16 @@ export class TestRepository extends Repository<Object> {
       new_product: +new_product[0]['fn_getnewproductbymonth'],
     };
   }
+
+  async getRatingDetailByOrderId(orderId: string): Promise<Object> {
+    let result = await this.query(
+      `select * from fn_getratingdetailbyorderid('${orderId}');`,
+    );
+
+    if (result.length > 0) {
+      result = result[0];
+    }
+
+    return result;
+  }
 }

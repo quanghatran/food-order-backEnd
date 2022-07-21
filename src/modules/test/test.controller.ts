@@ -44,4 +44,9 @@ export class TestController {
   async getOrderReportByStore(@Query('month') month: number, @GetUser() store) {
     return this.testService.getOrderReportByStore(month, store.id);
   }
+
+  @Get('/rating/detail/:orderId')
+  async getRatingDetail(@Param('orderId') orderId: string) {
+    return this.testService.getRatingDetailByOrderId(orderId);
+  }
 }

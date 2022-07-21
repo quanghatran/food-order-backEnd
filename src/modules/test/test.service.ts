@@ -24,4 +24,8 @@ export class TestService {
   async getOrderReportByStore(month: number, account: string) {
     return this.testRepository.getOrderReportByStore(month, account);
   }
+
+  async getRatingDetailByOrderId(orderId: string) {
+    return this.testRepository.getRatingDetailByOrderId(orderId);
+  }
 }
