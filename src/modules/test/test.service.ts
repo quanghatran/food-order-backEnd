@@ -17,4 +17,11 @@ export class TestService {
     return this.testRepository.getOrderDetail(orderId);
   }
 
+  async getOrderReportByAdmin(month: number) {
+    return this.testRepository.getOrderReportByAdmin(month);
+  }
+
+  async getOrderReportByStore(month: number, account: string) {
+    return this.testRepository.getOrderReportByStore(month, account);
+  }
 }

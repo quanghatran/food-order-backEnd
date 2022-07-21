@@ -7,9 +7,8 @@ import { AuthModule } from './modules/auth/auth.module';
 import { UserModule } from './modules/user/user.module';
 import { CategoryModule } from './modules/category/category.module';
 import { ProductModule } from './modules/product/product.module';
-import { TestModule } from './modules/test/test.module';
-
 import { ScheduleModule } from '@nestjs/schedule';
+import { TestModule } from './modules/test/test.module';
 
 @Module({
   imports: [
