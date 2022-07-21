@@ -29,4 +29,5 @@ swagger:
   title: 'Api document'
   description: 'Project internal api description document'
   version: '1.0'
-  server: 'http://13.229.84.201:3006'
+  # server: 'http://13.229.84.201:3006'
+  server: 'http://127.0.0.1:3006'

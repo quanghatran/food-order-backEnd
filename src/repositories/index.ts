@@ -8,3 +8,5 @@ export * from './store-detail.repository';
 export * from './notifications.repository';
 export * from './discount.repository';
 export * from './order-item.repository';
+export * from './test.repository';
+

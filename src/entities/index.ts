@@ -13,3 +13,4 @@ export * from './store.entity';
 export * from './user.entity';
 export * from './status.enum';
 export * from './role.enum';
+export * from './test.entity';
