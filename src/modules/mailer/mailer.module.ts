@@ -10,7 +10,7 @@ import { join } from 'path';
       // transport: 'smtps://user@example.com:topsecret@smtp.example.com',
       // or
       transport: {
-        host: 'smtp.gmail.com',
+        host: 'smtp-mail.outlook.com',
         port: 587,
         secure: false,
         auth: {
