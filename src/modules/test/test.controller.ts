@@ -1,5 +1,12 @@
 import { TestService } from './test.service';
-import { Controller, Get, Param, Patch, Query, UseGuards } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  Patch,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/entities';
 import { Roles } from 'src/share/decorators/roles.decorator';
@@ -69,6 +76,24 @@ export class TestController {
   @UseGuards(JwtGuard)
   async getNotificationByStore(@GetUser() store) {
     return this.testService.getNotificationByStore(store.id);
+  }
+
+  @Get('/notification/admin')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(JwtGuard)
+  async getNotificationByAdmin(@GetUser() admin) {
+    return this.testService.getNotificationByUser(admin.id);
+  }
+
+  @Get('/notification/user')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(RolesGuard)
+  @Roles(Role.User)
+  @UseGuards(JwtGuard)
+  async getNotificationByUser(@GetUser() user) {
+    return this.testService.getNotificationByUser(user.id);
   }
 
   @Patch('/notification/:notificationId')

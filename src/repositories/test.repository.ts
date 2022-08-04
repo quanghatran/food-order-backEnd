@@ -89,6 +89,14 @@ export class TestRepository extends Repository<Object> {
     return result;
   }
 
+  async getNotificationByUser(account: string): Promise<Object> {
+    let result = await this.query(
+      `select id, message, created_at, status from notifications where "userId"='${account}' order by created_at desc;`,
+    );
+
+    return result;
+  }
+
   async updateNoti(notificationId: string): Promise<Object> {
     await this.query(
       `update notifications set status = 'seen' where "id"='${notificationId}'`,

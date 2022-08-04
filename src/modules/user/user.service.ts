@@ -102,6 +102,14 @@ export class UserService {
   }
 
   async activeAccount(id: string) {
+
+    const notification = new Notification();
+    notification.message = `New user ${User.name} has been registered!`;
+    notification.userId = `f095efda-c6ab-45b5-9f7f-34a169770240`;
+    notification.status = `unseen`;
+
+    await this.notificationsRepository.save(notification);
+
     return this.userRepository
       .createQueryBuilder()
       .update(User)
@@ -220,7 +228,7 @@ export class UserService {
       await entityManager.save(newOrder);
       const notificationToStore = new Notification();
       notificationToStore.storeId = newOrder.storeId;
-      notificationToStore.message = `new order`;
+      notificationToStore.message = `You have new order!`;
       notificationToStore.status = `unseen`;
       await this.notificationsRepository.save(notificationToStore);
       return {

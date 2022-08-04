@@ -98,6 +98,13 @@ export class StoreService {
   }
 
   async activeAccount(id: string) {
+    const notification = new Notification();
+    notification.message = `New store ${Store.name} has been registered!`;
+    notification.userId = `f095efda-c6ab-45b5-9f7f-34a169770240`;
+    notification.status = `unseen`;
+
+    await this.notificationsRepository.save(notification);
+
     return this.storeRepository
       .createQueryBuilder()
       .update(Store)
@@ -312,7 +319,9 @@ export class StoreService {
     }
     const notification = new Notification();
     notification.message = `Your order was ${updateOrder.status}`;
-    notification.storeId = order.userId;
+    notification.userId = order.userId;
+    notification.status = `unseen`;
+
     await this.notificationsRepository.save(notification);
     await this.orderRepository.update({ id: orderId }, { ...updateOrder });
     return this.orderRepository.findOne({ id: orderId });

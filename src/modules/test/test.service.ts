@@ -37,6 +37,10 @@ export class TestService {
     return this.testRepository.getNotificationByStore(account);
   }
 
+  async getNotificationByUser(account: string) {
+    return this.testRepository.getNotificationByUser(account);
+  }
+
   async updateNoti(notificationId: string) {
     return this.testRepository.updateNoti(notificationId);
   }
