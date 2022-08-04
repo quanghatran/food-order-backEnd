@@ -1,5 +1,5 @@
 import { TestService } from './test.service';
-import { Controller, Get, Param, Query, UseGuards } from '@nestjs/common';
+import { Controller, Get, Param, Patch, Query, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { Role } from 'src/entities';
 import { Roles } from 'src/share/decorators/roles.decorator';
@@ -69,5 +69,10 @@ export class TestController {
   @UseGuards(JwtGuard)
   async getNotificationByStore(@GetUser() store) {
     return this.testService.getNotificationByStore(store.id);
+  }
+
+  @Patch('/notification/:notificationId')
+  async updateNoti(@Param('notificationId') notificationId: string) {
+    return this.testService.updateNoti(notificationId);
   }
 }

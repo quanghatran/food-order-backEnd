@@ -82,12 +82,20 @@ export class TestRepository extends Repository<Object> {
   }
 
   async getNotificationByStore(account: string): Promise<Object> {
-    console.log(account);
-
     let result = await this.query(
-      `select message, created_at, status from notifications where "storeId"='${account}' order by created_at desc;`,
+      `select id, message, created_at, status from notifications where "storeId"='${account}' order by created_at desc;`,
     );
 
     return result;
+  }
+
+  async updateNoti(notificationId: string): Promise<Object> {
+    await this.query(
+      `update notifications set status = 'seen' where "id"='${notificationId}'`,
+    );
+
+    return {
+      message: 'update noti status successfully!!!',
+    };
   }
 }
