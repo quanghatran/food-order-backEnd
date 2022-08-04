@@ -102,7 +102,6 @@ export class UserService {
   }
 
   async activeAccount(id: string) {
-
     const notification = new Notification();
     notification.message = `New user ${User.name} has been registered!`;
     notification.userId = `f095efda-c6ab-45b5-9f7f-34a169770240`;
@@ -312,6 +311,15 @@ export class UserService {
         store.star =
           (store.star * (store.rateCount - 1) + rating.star) / store.rateCount;
         await entityManager.save(store);
+
+        // noti to store
+        const notification = new Notification();
+        notification.message = `User has been rated your store!`;
+        notification.storeId = order.storeId;
+        notification.status = `unseen`;
+
+        await this.notificationsRepository.save(notification);
+
         return rate;
       },
     );
