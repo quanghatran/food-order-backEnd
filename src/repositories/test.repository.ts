@@ -81,5 +81,13 @@ export class TestRepository extends Repository<Object> {
     return result;
   }
 
-  
+  async getNotificationByStore(account: string): Promise<Object> {
+    console.log(account);
+
+    let result = await this.query(
+      `select message, created_at, status from notifications where "storeId"='${account}' order by created_at desc;`,
+    );
+
+    return result;
+  }
 }

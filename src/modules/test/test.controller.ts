@@ -61,4 +61,13 @@ export class TestController {
   ) {
     return this.testService.getAllOrders(pagenumber, pagesize);
   }
+
+  @Get('/notification/store')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Store)
+  @UseGuards(JwtGuard)
+  async getNotificationByStore(@GetUser() store) {
+    return this.testService.getNotificationByStore(store.id);
+  }
 }

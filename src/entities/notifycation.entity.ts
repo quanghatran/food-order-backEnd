@@ -37,4 +37,7 @@ export class Notification {
 
   @UpdateDateColumn({ name: 'updated_at', type: 'timestamp', nullable: true })
   updatedAt?: Date;
+
+  @Column({ name: 'status', nullable: true })
+  status?: string;
 }

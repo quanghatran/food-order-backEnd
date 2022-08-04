@@ -32,4 +32,8 @@ export class TestService {
   async getAllOrders(pagenumber: number, pagesize: number) {
     return this.testRepository.getAllOrders(pagenumber, pagesize);
   }
+
+  async getNotificationByStore(account: string) {
+    return this.testRepository.getNotificationByStore(account);
+  }
 }

@@ -221,6 +221,7 @@ export class UserService {
       const notificationToStore = new Notification();
       notificationToStore.storeId = newOrder.storeId;
       notificationToStore.message = `new order`;
+      notificationToStore.status = `unseen`;
       await this.notificationsRepository.save(notificationToStore);
       return {
         order: newOrder,
