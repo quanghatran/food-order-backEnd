@@ -66,4 +66,20 @@ export class TestRepository extends Repository<Object> {
 
     return result;
   }
+
+  async getAllOrders(pagenumber: number, pagesize: number): Promise<Object> {
+    let result = { orders: [], total_count: 0 };
+
+    result.orders = await this.query(
+      `select * from fn_getallorders(${pagenumber}, ${pagesize});`,
+    );
+
+    let count = await this.query(`select count(*) from orders`);
+
+    result.total_count = +count[0].count;
+
+    return result;
+  }
+
+  
 }

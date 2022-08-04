@@ -66,8 +66,9 @@ export class Order {
   @Column('uuid', { nullable: true })
   discountId: string;
 
-  @ManyToOne(() => Discount, (discount) => discount.orders)
-  @JoinColumn({ name: 'discountId' })
+  // @ManyToOne(() => Discount, (discount) => discount.orders)
+  // @JoinColumn({ name: 'discountId' })
+  @Column('uuid', { nullable: true })
   discount: Discount;
 
   @Column('uuid', { nullable: false })

@@ -28,4 +28,8 @@ export class TestService {
   async getRatingDetailByOrderId(orderId: string) {
     return this.testRepository.getRatingDetailByOrderId(orderId);
   }
+
+  async getAllOrders(pagenumber: number, pagesize: number) {
+    return this.testRepository.getAllOrders(pagenumber, pagesize);
+  }
 }

@@ -49,4 +49,16 @@ export class TestController {
   async getRatingDetail(@Param('orderId') orderId: string) {
     return this.testService.getRatingDetailByOrderId(orderId);
   }
+
+  @Get('/order/all')
+  @ApiBearerAuth('JWT-auth')
+  @UseGuards(RolesGuard)
+  @Roles(Role.Admin)
+  @UseGuards(JwtGuard)
+  async getAllOrders(
+    @Query('pagenumber') pagenumber: number,
+    @Query('pagesize') pagesize: number,
+  ) {
+    return this.testService.getAllOrders(pagenumber, pagesize);
+  }
 }
