@@ -10,6 +10,7 @@ import {
   OrderRepository,
   StoreDetailRepository,
   UserRepository,
+  ProductRepository,
 } from 'src/repositories';
 import { CreateUserDto } from '../auth/dto/create-user.dto';
 import {
@@ -19,6 +20,7 @@ import {
   Order,
   OrderItem,
   OrderStatus,
+  Product,
   Rate,
   Role,
   Status,
@@ -34,6 +36,7 @@ import { EntityManager, getConnection, ILike, MoreThan } from 'typeorm';
 import { ProductService } from '../product/product.service';
 import { DiscountRepository } from '../../repositories/discount.repository';
 import { RatingOrderDto } from './dto/order.dto';
+import { ProductCaregoryDto } from '../product/dto/product-category.dto';
 
 @Injectable()
 export class UserService {
@@ -41,6 +44,8 @@ export class UserService {
     private readonly userRepository: UserRepository,
     private readonly discountRepository: DiscountRepository,
     private readonly orderRepository: OrderRepository,
+    private readonly productRepository: ProductRepository,
+
     private readonly mailService: MailService,
     @Inject(forwardRef(() => StoreService))
     private readonly storeService: StoreService,
@@ -177,6 +182,7 @@ export class UserService {
       );
 
     const result = await getConnection().transaction(async (entityManager) => {
+      // create order
       const newOrder = new Order();
       newOrder.status = OrderStatus.PENDING;
       newOrder.paymentType = createOrderDto.paymentType;
@@ -194,12 +200,28 @@ export class UserService {
       }
       await entityManager.save(newOrder);
 
+      // create each item in order, references to order
       for (const item of createOrderDto.items) {
         const newItem = new OrderItem();
         newItem.orderId = newOrder.id;
         newItem.productId = item.productId;
         newItem.quantity = item.quantity;
         await entityManager.save(newItem);
+
+        const product_item = await entityManager.find(Product, {
+          where: {
+            id: item.productId,
+          },
+        });
+
+        console.log(product_item[0]);
+
+        await this.productRepository.update(
+          { id: item.productId },
+          {
+            boughtNum: product_item[0].boughtNum + item.quantity,
+          },
+        );
       }
       const productItems: OrderItem[] = await entityManager.find(OrderItem, {
         where: {
@@ -207,6 +229,7 @@ export class UserService {
         },
         relations: ['product'],
       });
+
       const orderPrices: number[] = productItems.map((productItem) => {
         if (productItem.product.status === Status.INACTIVE) {
           throw new BadRequestException(
@@ -225,11 +248,14 @@ export class UserService {
       }
       newOrder.totalPrice = totalPrice;
       await entityManager.save(newOrder);
+
+      // create noti
       const notificationToStore = new Notification();
       notificationToStore.storeId = newOrder.storeId;
       notificationToStore.message = `You have new order!`;
       notificationToStore.status = `unseen`;
       await this.notificationsRepository.save(notificationToStore);
+
       return {
         order: newOrder,
         orderItems: productItems,

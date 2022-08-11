@@ -11,6 +11,7 @@ import {
   NotificationsRepository,
   OrderRepository,
   StoreDetailRepository,
+  ProductRepository
 } from '../../repositories';
 
 @Module({
@@ -22,6 +23,7 @@ import {
       OrderRepository,
       StoreDetailRepository,
       NotificationsRepository,
+      ProductRepository
     ]),
     MailModule,
     ProductModule,
